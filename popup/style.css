@@ -1,7 +1,12 @@
-ul.nav.with-indicators {
+/* Make classes larger  */
+li.parent.js-menu-classes-list.opened ul.nav.with-indicators {
     max-height: min-content !important;
 }
-
-ul.nav.with-indicators li {
+li.parent.js-menu-classes-list.opened ul.nav.with-indicators li {
     font-size: large;
+}
+
+/* Make the faria one os disappear */
+li.faria-one {
+    display: none !important;
 }
