@@ -2,7 +2,7 @@
     "name": "Basic Chrome Exstension",
     "version": "1.0",
     "description": "",
-    "permissions": ["activeTab","declarativeContent", "storage"],
+    "permissions": ["activeTab", "declarativeContent", "storage"],
     "background": {
       "scripts": ["index.js"],
       "persistent": false

@@ -1,3 +1,7 @@
-body{
-    background: red;
+ul.nav.with-indicators {
+    max-height: min-content !important;
+}
+
+ul.nav.with-indicators li {
+    font-size: large;
 }
