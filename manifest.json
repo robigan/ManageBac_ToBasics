@@ -1,6 +1,6 @@
 {
-    "name": "Basic Chrom Exstension",
-    "version": "1.1",
+    "name": "Basic Chrome Exstension",
+    "version": "1.0",
     "description": "",
     "permissions": ["activeTab","declarativeContent", "storage"],
     "background": {
