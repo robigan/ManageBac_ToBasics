@@ -1,7 +1,7 @@
 {
-    "name": "ManageBac Theming Engine",
+    "name": "ManageBac ToBasics",
     "version": "1.2",
-    "description": "",
+    "description": "A Chrome extension for the popular school management software, ManageBac, which enhances it by adding a theming engine",
     "permissions": ["activeTab", "declarativeContent", "storage"],
     "background": {
       "scripts": ["indexChrome.js"],

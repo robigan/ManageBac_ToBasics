@@ -1,0 +1,21 @@
+{
+  "name": "manage-bac_to-basics",
+  "version": "1.0.0",
+  "description": "A project that goes back to development basics 101, while working on improving the ManageBac ecosystem, LIKE MAKING AT LEAST AN ELECTRON APP HUH?!?!?!\nRemeber: This is an unofficial project, by using this project ur taking your own risks",
+  "main": "electronApp/main.js",
+  "scripts": {
+    "dev": "electron . --trace-warnings",
+    "start": "electron ."
+  },
+  "keywords": [
+    "managebac",
+    "electron",
+    "themes"
+  ],
+  "author": "robigan",
+  "license": "GPLv3",
+  "devDependencies": {
+    "electron": "^15.0.0",
+    "eslint": "^7.32.0"
+  }
+}
