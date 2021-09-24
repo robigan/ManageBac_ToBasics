@@ -2,26 +2,32 @@
     "name": "ManageBac ToBasics",
     "version": "1.2",
     "description": "A Chrome extension for the popular school management software, ManageBac, which enhances it by adding a theming engine",
-    "permissions": ["activeTab", "declarativeContent", "storage"],
+    "permissions": [
+        "activeTab",
+        "declarativeContent",
+        "storage"
+    ],
     "background": {
-      "scripts": ["indexChrome.js"],
-      "persistent": false
+        "scripts": [
+            "indexChrome.js"
+        ],
+        "persistent": false
     },
     "page_action": {
-      "browser_style": "true",
-      "default_popup": "popupChrome/index.html",
-      "default_icon": {
+        "browser_style": "true",
+        "default_popup": "popupChrome/index.html",
+        "default_icon": {
+            "16": "popupChrome/icons/get_started16.png",
+            "32": "popupChrome/icons/get_started32.png",
+            "48": "popupChrome/icons/get_started48.png",
+            "128": "popupChrome/icons/get_started128.png"
+        }
+    },
+    "icons": {
         "16": "popupChrome/icons/get_started16.png",
         "32": "popupChrome/icons/get_started32.png",
         "48": "popupChrome/icons/get_started48.png",
         "128": "popupChrome/icons/get_started128.png"
-      }
-    },
-    "icons": {
-      "16": "popupChrome/icons/get_started16.png",
-      "32": "popupChrome/icons/get_started32.png",
-      "48": "popupChrome/icons/get_started48.png",
-      "128": "popupChrome/icons/get_started128.png"
     },
     "manifest_version": 2
 }
