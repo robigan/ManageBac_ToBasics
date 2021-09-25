@@ -6,7 +6,7 @@ A wrapper/web-extension to the popular school management platform, ManageBac. Wh
 # Installing
 You only need to git clone and install dependencies, which is:
 ```
-git clone https://github.com/robigan/ManageBack_ToBasics.git && cd ManageBack_ToBasics && npm run install
+git clone https://github.com/robigan/ManageBack_ToBasics.git && cd ManageBack_ToBasics && npm install
 ```
 
 # Straight to compiling
