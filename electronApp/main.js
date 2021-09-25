@@ -14,7 +14,7 @@ const createWindow = async () => {
             sandbox: true,
             preload: resolve(__dirname, "preload.js")
         },
-        title: "ManageBac ToBasics",
+        title: "ManageBack ToBasics",
         icon: resolve(__dirname, "ManageBacIcon.png"),
     });
 

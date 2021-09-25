@@ -1,16 +1,23 @@
 {
-  "name": "manage-bac_to-basics",
-  "productName": "ManageBac ToBasics",
+  "name": "manage-back_to-basics",
+  "productName": "ManageBack ToBasics",
   "version": "1.0.0",
   "description": "A project that goes back to development basics 101, while working on improving the ManageBac ecosystem, LIKE MAKING AT LEAST AN ELECTRON APP HUH?!?!?!\nRemeber: This is an unofficial project, by using this project ur taking your own risks",
   "main": "electronApp/main.js",
   "scripts": {
     "start": "electron .",
     "lint": "eslint electronApp page popupChrome indexChrome.js",
-    "build": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --out=./out --overwrite"
+    "build": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --out=./out --overwrite",
+    "build-all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --out=./out --overwrite --all",
+    "build-darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --out=./out --overwrite --platform=\"darwin\" --icon=./electronApp/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-categort-type=\"public.app-category.education\"",
+    "build-win32": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --out=./out --overwrite --platform=\"win32\" --icon=./electronApp/ManageBacIcon.ico",
+    "build-linux": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --out=./out --overwrite --platform=\"linux\" --icon=./electronApp/ManageBacIcon.png"
   },
   "keywords": [
     "managebac",
+    "manageback",
+    "manage-bac",
+    "manage-back",
     "electron",
     "themes"
   ],

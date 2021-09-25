@@ -1,5 +1,5 @@
 {
-    "name": "ManageBac ToBasics",
+    "name": "ManageBack ToBasics",
     "version": "1.2",
     "description": "A Chrome extension for the popular school management software, ManageBac, which enhances it by adding a theming engine",
     "permissions": [
