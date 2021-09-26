@@ -10,7 +10,7 @@ git clone https://github.com/robigan/ManageBack_ToBasics.git && cd ManageBack_To
 ```
 
 # Straight to compiling
-There is a small script in package.json that will do everything for you (including installing deps and compiling), to use it, just run the following command:
+The following command will do everything for you (including installing deps and compiling), to use it, just run the following command:
 ```
 git clone https://github.com/robigan/ManageBack_ToBasics.git --depth 1 && cd ManageBack_ToBasics && npm install --production=false && npm run build
 ```
