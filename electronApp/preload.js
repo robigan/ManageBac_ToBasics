@@ -3,7 +3,7 @@ const TO_FIX = "div#page-container";
 
 const patcher = () => {
     if (location.host === "www.managebac.com", location.pathname === "/login") {
-        // console.log("Applying patch script");
+        console.log("Applying patch script");
         TO_HIDE.forEach((query) => document.querySelector(query).style.display = "none");
         (async () => {
             setTimeout(() => document.querySelector(TO_FIX).style.paddingTop = "0px", 300);

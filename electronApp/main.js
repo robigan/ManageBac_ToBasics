@@ -50,14 +50,14 @@ const setMainMenu = async () => {
             ]
         }
     ));
-    // console.log(Menu.getApplicationMenu());
+    console.log(Menu.getApplicationMenu());
 };
 
 const flushUnnecessaryCookies = async () => {
-    // console.log((await session.defaultSession.cookies.get({})).length);
+    console.log((await session.defaultSession.cookies.get({})).length);
     for (const cookie of await session.defaultSession.cookies.get({})) {
         if (!cookie.domain.endsWith(".managebac.com")) {
-            // console.log(cookie.domain);
+            console.log(cookie.domain);
             if (cookie.domain[0] === ".") {
                 await session.defaultSession.cookies.remove(cookie.domain.substring(1), cookie.name);
             } else {
@@ -65,7 +65,7 @@ const flushUnnecessaryCookies = async () => {
             }
         }
     }
-    // console.log((await session.defaultSession.cookies.get({})).length);
+    console.log((await session.defaultSession.cookies.get({})).length);
 };
 
 app.whenReady().then(async () => {
