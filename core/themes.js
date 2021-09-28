@@ -1,8 +1,8 @@
 /// <reference path="../typings/index.d.ts" />
 
 const patcher = async () => {
-    console.log("Running themes patcher");
     if (location.host.endsWith(".managebac.com") && !(location.host === "www.managebac.com") && (location.pathname === "/student/theme" || location.pathname === "/student/profile")) {
+        console.log("Running themes patcher");
         const studentProfileNavbar = $("ul.nav.nav-tabs");
         const customThemes = $("<li><a>Custom Themes</a></li>");
         studentProfileNavbar.append(customThemes);
@@ -16,7 +16,7 @@ const patcher = async () => {
 };
 
 module.exports = {
-    "event": "load",
+    "event": "DOMContentLoad",
     "patch": patcher,
     "id": "themes"
 };

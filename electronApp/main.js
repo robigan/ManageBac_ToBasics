@@ -3,6 +3,7 @@ const { readFile } = require("fs/promises");
 const { resolve } = require("path");
 
 const urlRe = /:\/\/(.[^/]+)/;
+const development = process.env.NODE_ENV || false;
 
 const createWindow = async () => {
     const win = new BrowserWindow({ 
@@ -52,15 +53,15 @@ const setMainMenu = async () => { // Add more menus to the menu bar
             ]
         }
     ));
-    console.log(Menu.getApplicationMenu());
+    development ? console.log(Menu.getApplicationMenu()) : undefined;
 };
 
 // eslint-disable-next-line no-unused-vars
 const flushUnnecessaryCookies = async () => { // Will flush any cookies that are not of the managebac.com domain
-    console.log((await session.defaultSession.cookies.get({})).length);
+    development ? console.log((await session.defaultSession.cookies.get({})).length) : undefined;
     for (const cookie of await session.defaultSession.cookies.get({})) {
         if (!cookie.domain.endsWith(".managebac.com")) {
-            console.log(cookie.domain);
+            development ? console.log(cookie.domain) : undefined;
             if (cookie.domain[0] === ".") {
                 await session.defaultSession.cookies.remove(cookie.domain.substring(1), cookie.name);
             } else {
@@ -68,10 +69,11 @@ const flushUnnecessaryCookies = async () => { // Will flush any cookies that are
             }
         }
     }
-    console.log((await session.defaultSession.cookies.get({})).length);
+    development ? console.log((await session.defaultSession.cookies.get({})).length) : undefined;
 };
 
 app.whenReady().then(async () => {
+    development ? console.log("Running in development") : undefined;
     await createWindow();
     // await setMainMenu();
     // await flushUnnecessaryCookies();
