@@ -5,6 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Electron Main",
+            // "program": "${workspaceFolder}/electronApp/main.js",
+            "request": "launch",
+            "runtimeArgs": [
+                "${workspaceFolder}",
+                "--enable-logging",
+                "--remote-debugging-port=9222"
+            ],
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "type": "node"
+        },
+        {
+            "name": "Debug attach to Electron Renderer",
+            "port": 9222,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "name": "Start",
             "request": "launch",
             "runtimeArgs": [

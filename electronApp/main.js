@@ -3,6 +3,7 @@ const { readFile } = require("fs/promises");
 const { resolve } = require("path");
 
 const urlRe = /:\/\/(.[^/]+)/;
+const development = process.env.NODE_ENV || false;
 
 const createWindow = async () => {
     const win = new BrowserWindow({ 
@@ -11,7 +12,7 @@ const createWindow = async () => {
         webPreferences: { 
             nodeIntegration: false, 
             contextIsolation: true, 
-            sandbox: true,
+            // sandbox: true, // Causes issues with the preload script
             preload: resolve(__dirname, "preload.js")
         },
         title: "ManageBack ToBasics",
@@ -19,6 +20,7 @@ const createWindow = async () => {
     });
 
     win.loadURL("https://www.managebac.com/login", {userAgent: `Electron/${process.versions.electron}`});
+    // win.loadURL("https://hinternationalschool.managebac.com/student/profile", {userAgent: `Electron/${process.versions.electron}`});
 
     // Set such that when opening a new window the action is denied, so as to give a more app like experience
     const webContents = win.webContents;
@@ -35,7 +37,8 @@ const createWindow = async () => {
     });
 };
 
-const setMainMenu = async () => {
+// eslint-disable-next-line no-unused-vars
+const setMainMenu = async () => { // Add more menus to the menu bar
     const menu = Menu.getApplicationMenu();
     menu.append(new MenuItem(
         {
@@ -50,14 +53,15 @@ const setMainMenu = async () => {
             ]
         }
     ));
-    // console.log(Menu.getApplicationMenu());
+    development ? console.log(Menu.getApplicationMenu()) : undefined;
 };
 
-const flushUnnecessaryCookies = async () => {
-    // console.log((await session.defaultSession.cookies.get({})).length);
+// eslint-disable-next-line no-unused-vars
+const flushUnnecessaryCookies = async () => { // Will flush any cookies that are not of the managebac.com domain
+    development ? console.log((await session.defaultSession.cookies.get({})).length) : undefined;
     for (const cookie of await session.defaultSession.cookies.get({})) {
         if (!cookie.domain.endsWith(".managebac.com")) {
-            // console.log(cookie.domain);
+            development ? console.log(cookie.domain) : undefined;
             if (cookie.domain[0] === ".") {
                 await session.defaultSession.cookies.remove(cookie.domain.substring(1), cookie.name);
             } else {
@@ -65,13 +69,14 @@ const flushUnnecessaryCookies = async () => {
             }
         }
     }
-    // console.log((await session.defaultSession.cookies.get({})).length);
+    development ? console.log((await session.defaultSession.cookies.get({})).length) : undefined;
 };
 
 app.whenReady().then(async () => {
+    development ? console.log("Running in development") : undefined;
     await createWindow();
-    await setMainMenu();
-    await flushUnnecessaryCookies();
+    // await setMainMenu();
+    // await flushUnnecessaryCookies();
 
     app.on("window-all-closed", async () => {
         app.quit();
