@@ -1,10 +1,8 @@
-/// <reference path="../typings/index.d.ts" />
-
-const patcher = async () => {
+window.addEventListener("DOMContentLoaded", async () => {
     if (location.host.endsWith(".managebac.com") && !(location.host === "www.managebac.com") && (location.pathname === "/student/theme" || location.pathname === "/student/profile")) {
-        console.log("Running themes patcher");
-        const studentProfileNavbar = $("ul.nav.nav-tabs");
-        const customThemes = $("<li><a>Custom Themes</a></li>");
+        const jQuery = require("jquery");
+        const studentProfileNavbar = jQuery("ul.nav.nav-tabs");
+        const customThemes = jQuery("<li><a>Custom Themes</a></li>");
         studentProfileNavbar.append(customThemes);
         customThemes.on("click", () => {
             studentProfileNavbar.children().each((index, el) => {
@@ -13,10 +11,4 @@ const patcher = async () => {
             customThemes.addClass("active");
         });
     }
-};
-
-module.exports = {
-    "event": "DOMContentLoad",
-    "patch": patcher,
-    "id": "themes"
-};
+});

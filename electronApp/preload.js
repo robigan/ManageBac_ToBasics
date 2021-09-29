@@ -15,9 +15,4 @@ const patcher = () => {
 
 window.addEventListener("load", patcher);
 
-/** @type {import("../JSDoc.js").core} */
-const cores = [(require(resolve(__dirname, "../core/themes.js")))];
-
-cores.forEach((core) => {
-    window.addEventListener(core.event, core.patch);
-});
+require(resolve(__dirname, "../core/themes.js"));

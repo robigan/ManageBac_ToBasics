@@ -27,5 +27,8 @@
     "electron": "^15.0.0",
     "electron-packager": "^15.4.0",
     "eslint": "^7.32.0"
+  },
+  "dependencies": {
+    "jquery": "^3.6.0"
   }
 }

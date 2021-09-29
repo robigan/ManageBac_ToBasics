@@ -3,15 +3,18 @@ const { readFile } = require("fs/promises");
 const { resolve } = require("path");
 
 const urlRe = /:\/\/(.[^/]+)/;
-const development = process.env.NODE_ENV || false;
+const webContentsOptions = {
+    userAgent: `Electron/${process.versions.electron}`
+};
+const development = process.env.NODE_ENV === "development" || false;
 
 const createWindow = async () => {
-    const win = new BrowserWindow({ 
-        width: 1200, 
-        height: 720, 
-        webPreferences: { 
-            nodeIntegration: false, 
-            contextIsolation: true, 
+    const win = new BrowserWindow({
+        width: 1200,
+        height: 720,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
             // sandbox: true, // Causes issues with the preload script
             preload: resolve(__dirname, "preload.js")
         },
@@ -19,12 +22,15 @@ const createWindow = async () => {
         icon: resolve(__dirname, "ManageBacIcon.png"),
     });
 
-    win.loadURL("https://www.managebac.com/login", {userAgent: `Electron/${process.versions.electron}`});
-    // win.loadURL("https://hinternationalschool.managebac.com/student/profile", {userAgent: `Electron/${process.versions.electron}`});
+    // win.loadURL("https://www.managebac.com/login", webContentsOptions);
+    win.loadURL("https://hinternationalschool.managebac.com/", webContentsOptions);
 
     // Set such that when opening a new window the action is denied, so as to give a more app like experience
     const webContents = win.webContents;
-    webContents.setWindowOpenHandler((/* details */) => {
+    webContents.setWindowOpenHandler((details) => {
+        if (details.url.match(urlRe)[1].endsWith(".managebac.com") && !(details.url.match(urlRe)[1] === "www.managebac.com")) {
+            webContents.loadURL(details.url, webContentsOptions);
+        }
         return { action: "deny" };
     });
 

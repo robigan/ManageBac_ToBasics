@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Attach",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "name": "Debug Electron Main",
             // "program": "${workspaceFolder}/electronApp/main.js",
             "request": "launch",
@@ -20,14 +27,8 @@
             "env": {
                 "NODE_ENV": "development"
             },
+            "webRoot": "${workspaceFolder}",
             "type": "node"
-        },
-        {
-            "name": "Debug attach to Electron Renderer",
-            "port": 9222,
-            "request": "attach",
-            "type": "chrome",
-            "webRoot": "${workspaceFolder}"
         },
         {
             "name": "Start",
