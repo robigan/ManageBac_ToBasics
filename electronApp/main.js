@@ -1,4 +1,4 @@
-const { app, BrowserWindow, session, Menu, MenuItem } = require("electron");
+const { app, BrowserWindow, session, Menu, MenuItem, shell } = require("electron");
 const { readFile } = require("fs/promises");
 const { resolve } = require("path");
 
@@ -30,6 +30,8 @@ const createWindow = async () => {
     webContents.setWindowOpenHandler((details) => {
         if (details.url.match(urlRe)[1].endsWith(".managebac.com") && !(details.url.match(urlRe)[1] === "www.managebac.com")) {
             webContents.loadURL(details.url, webContentsOptions);
+        } else if (!details.url.match(urlRe)[1].endsWith(".managebac.com")) {
+            shell.openExternal(details.url);
         }
         return { action: "deny" };
     });
