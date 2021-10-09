@@ -1,11 +1,13 @@
-const { app, BrowserWindow, session, Menu, MenuItem, shell } = require("electron");
-const { readFile } = require("fs/promises");
-const { resolve } = require("path");
+const { app, BrowserWindow, session, Menu, MenuItem, shell } = require("electron/main");
+const { readFile } = require("node:fs/promises");
+const { resolve } = require("node:path");
+const { setupRedirect, subdomainDefault } = require("./domainDefaults.js");
 
 const urlRe = /:\/\/(.[^/]+)/;
 const webContentsOptions = {
     userAgent: `Electron/${process.versions.electron}`
 };
+
 const development = process.env.NODE_ENV === "development" || false;
 
 const createWindow = async () => {
@@ -22,8 +24,8 @@ const createWindow = async () => {
         icon: resolve(__dirname, "ManageBacIcon.png"),
     });
 
-    // win.loadURL("https://www.managebac.com/login", webContentsOptions);
-    win.loadURL("https://hinternationalschool.managebac.com/", webContentsOptions);
+    const subdomain = await subdomainDefault("get");
+    win.loadURL(subdomain && (subdomain !== "www") ? `https://${subdomain}.managebac.com` : "https://www.managebac.com/login", webContentsOptions);
 
     // Set such that when opening a new window the action is denied, so as to give a more app like experience
     const webContents = win.webContents;
@@ -82,8 +84,9 @@ const flushUnnecessaryCookies = async () => { // Will flush any cookies that are
 
 app.whenReady().then(async () => {
     development ? console.log("Running in development") : undefined;
+    await setupRedirect();
     await createWindow();
-    // await setMainMenu();
+    await setMainMenu();
     // await flushUnnecessaryCookies();
 
     app.on("window-all-closed", async () => {
