@@ -1,14 +1,16 @@
-const { app, BrowserWindow, session, Menu, MenuItem, shell } = require("electron/main");
+const { app, BrowserWindow, session, shell } = require("electron/main");
 const { readFile } = require("node:fs/promises");
 const { resolve } = require("node:path");
+
 const { setupRedirect, subdomainDefault } = require("./domainDefaults.js");
+const { setMainMenu } = require("./menuBar.js");
 
 const urlRe = /:\/\/(.[^/]+)/;
 const webContentsOptions = {
     userAgent: `Electron/${process.versions.electron}`
 };
 
-const development = process.env.NODE_ENV === "development" || false;
+const { development } = require("./helper.js");
 
 const createWindow = async () => {
     const win = new BrowserWindow({
@@ -45,25 +47,6 @@ const createWindow = async () => {
             webContents.insertCSS((await style).toString());
         }
     });
-};
-
-// eslint-disable-next-line no-unused-vars
-const setMainMenu = async () => { // Add more menus to the menu bar
-    const menu = Menu.getApplicationMenu();
-    menu.append(new MenuItem(
-        {
-            label: "Manage",
-            submenu: [
-                {
-                    label: "Flush cookies",
-                    click: async () => {
-                        await session.defaultSession.cookies.flushStore();
-                    }
-                }
-            ]
-        }
-    ));
-    development ? console.log(Menu.getApplicationMenu()) : undefined;
 };
 
 // eslint-disable-next-line no-unused-vars
