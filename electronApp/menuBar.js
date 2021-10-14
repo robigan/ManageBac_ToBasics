@@ -85,18 +85,20 @@ const template = [
             { type: "separator" },
             { role: "togglefullscreen" },
             { type: "separator" },
-            {
-                label: "Back",
-                click: async () => {
+            ...(development ? [
+                {
+                    label: "Back",
+                    click: async () => {
 
+                    }
+                },
+                {
+                    label: "Forward",
+                    click: async () => {
+
+                    }
                 }
-            },
-            {
-                label: "Forward",
-                click: async () => {
-                    
-                }
-            }
+            ] : [])
         ]
     },
     {
