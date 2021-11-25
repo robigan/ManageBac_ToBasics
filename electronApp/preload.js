@@ -9,3 +9,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
 require(resolve(__dirname, "./login.js"));
 require(resolve(__dirname, "../core/themes.js"));
+require(resolve(__dirname, "../core/globalCss.js"));
+// require(resolve(__dirname, "./contextMenu.js"));

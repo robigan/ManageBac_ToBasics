@@ -1,9 +1,10 @@
-const { app, BrowserWindow, session, shell } = require("electron/main");
+const { app, BrowserWindow, shell } = require("electron/main");
 const { readFile } = require("node:fs/promises");
 const { resolve } = require("node:path");
 
 const { setupRedirect, subdomainDefault } = require("./domainDefaults.js");
 const { setMainMenu } = require("./menuBar.js");
+const { setupContextMenu } = require("./contextMenu.js");
 
 const urlRe = /:\/\/(.[^/]+)/;
 const webContentsOptions = {
@@ -11,6 +12,9 @@ const webContentsOptions = {
 };
 
 const { development } = require("./helper.js");
+
+// const electronRemoteMain = require("@electron/remote/main");
+// electronRemoteMain.initialize();
 
 const createWindow = async () => {
     const win = new BrowserWindow({
@@ -29,8 +33,11 @@ const createWindow = async () => {
     const subdomain = await subdomainDefault("get");
     win.loadURL(subdomain && (subdomain !== "www") ? `https://${subdomain}.managebac.com` : "https://www.managebac.com/login", webContentsOptions);
 
+    setupContextMenu(win);
+
     // Set such that when opening a new window the action is denied, so as to give a more app like experience
     const webContents = win.webContents;
+
     webContents.setWindowOpenHandler((details) => {
         if (details.url.match(urlRe)[1].endsWith(".managebac.com") && !(details.url.match(urlRe)[1] === "www.managebac.com")) {
             webContents.loadURL(details.url, webContentsOptions);
@@ -49,28 +56,11 @@ const createWindow = async () => {
     });
 };
 
-// eslint-disable-next-line no-unused-vars
-const flushUnnecessaryCookies = async () => { // Will flush any cookies that are not of the managebac.com domain
-    development ? console.log((await session.defaultSession.cookies.get({})).length) : undefined;
-    for (const cookie of await session.defaultSession.cookies.get({})) {
-        if (!cookie.domain.endsWith(".managebac.com")) {
-            development ? console.log(cookie.domain) : undefined;
-            if (cookie.domain[0] === ".") {
-                await session.defaultSession.cookies.remove(cookie.domain.substring(1), cookie.name);
-            } else {
-                await session.defaultSession.cookies.remove(cookie.domain, cookie.name);
-            }
-        }
-    }
-    development ? console.log((await session.defaultSession.cookies.get({})).length) : undefined;
-};
-
 app.whenReady().then(async () => {
     development ? console.log("Running in development") : undefined;
     await setupRedirect();
     await createWindow();
     await setMainMenu();
-    // await flushUnnecessaryCookies();
 
     app.on("window-all-closed", async () => {
         app.quit();

@@ -1,4 +1,4 @@
-const { app, Menu, shell, dialog } = require("electron/main");
+const { app, Menu, shell, session } = require("electron/main");
 const { isMac, development } = require("./helper.js");
 
 const template = [
@@ -22,19 +22,15 @@ const template = [
         label: "File",
         role: "fileMenu",
         submenu: [
-            // isMac ? { role: "close" } : { role: "quit" },
             {
-                label: "Flush Coookies",
+                label: "Flush Data Stores",
                 click: async () => {
-                    const dialogResponse = await dialog.showMessageBox({ 
-                        message: "Proceed with Flushing Cookies?", 
-                        type: "warning",
-                        title: "Flush Cookies?",
-                        buttons: ["Proceed"]
-                    });
-                    development ? console.log(dialogResponse.response === 0) : undefined;
+                    await session.defaultSession.cookies.flushStore();
+                    session.defaultSession.flushStorageData();
+                    development ? console.log(await session.defaultSession.cookies.get({})) : undefined;
                 }
-            }
+            },
+            ...(isMac ? [] : [{ role: "quit" }])
         ]
     },
     {

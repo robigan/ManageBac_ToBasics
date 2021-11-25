@@ -24,11 +24,12 @@
   "author": "robigan",
   "license": "GPLv3",
   "devDependencies": {
-    "electron": "^15.1.2",
+    "electron": "^16.0.2",
     "electron-packager": "^15.4.0",
-    "eslint": "^8.0.1"
+    "eslint": "^8.3.0"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.1",
     "electron-store": "^8.0.1",
     "jquery": "^3.6.0"
   }
