@@ -8,10 +8,10 @@
     "start": "electron .",
     "lint": "eslint electronApp popupChrome indexChrome.js",
     "build": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite",
-    "build-all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --all",
-    "build-darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"darwin\" --icon=./electronApp/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-category-type=\"public.app-category.education\"",
-    "build-win32": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"win32\" --icon=./electronApp/ManageBacIcon.ico",
-    "build-linux": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"linux\" --icon=./electronApp/ManageBacIcon.png"
+    "build:all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --all",
+    "build:darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"darwin\" --icon=./electronApp/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-category-type=\"public.app-category.education\"",
+    "build:win32": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"win32\" --icon=./electronApp/ManageBacIcon.ico",
+    "build:linux": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"linux\" --icon=./electronApp/ManageBacIcon.png"
   },
   "keywords": [
     "managebac",
@@ -24,6 +24,7 @@
   "author": "robigan",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
     "electron": "^17.0.0",
     "electron-packager": "^15.4.0",
     "eslint": "^8.8.0",

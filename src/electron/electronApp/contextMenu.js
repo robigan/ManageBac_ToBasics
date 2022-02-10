@@ -1,6 +1,9 @@
 // Some of the code is of copyright holder Sindre Sorhus (MIT License)
 
-const { Menu } = require("electron/main");
+const { Menu, dialog } = require("electron/main");
+const { createWriteStream } = require("node:fs");
+const { get } = require("node:https");
+const { setTimeout } = require("node:timers/promises");
 
 const { development } = require("./helper.js");
 
@@ -12,7 +15,7 @@ const setupContextMenu = (browserWindow) => {
 
     webContents.on("context-menu", (event, params) => {
         const hasText = params.selectionText.trim().length > 0;
-        const isLink = !!params.linkURL;
+        // const isLink = !!params.linkURL;
         const can = type => params.editFlags[`can${type}`] && hasText;
 
         /**
@@ -29,7 +32,7 @@ const setupContextMenu = (browserWindow) => {
                 label: "Cu&t",
                 enabled: can("Cut"),
                 visible: params.isEditable,
-                click() {
+                async click() {
                     webContents.cut();
                 }
             },
@@ -37,7 +40,7 @@ const setupContextMenu = (browserWindow) => {
                 label: "&Copy",
                 enabled: can("Copy"),
                 visible: params.isEditable || hasText,
-                click() {
+                async click() {
                     webContents.copy();
                 }
             },
@@ -45,34 +48,39 @@ const setupContextMenu = (browserWindow) => {
                 label: "&Paste",
                 enabled: can("Paste"),
                 visible: params.isEditable,
-                click() {
+                async click() {
                     webContents.paste();
                 }
             },
             {
                 label: "Save I&mage",
                 visible: params.mediaType === "image",
-                click() {
+                async click() {
                     // I am lazy af
                     const srcURLLastSlash = params.srcURL.split("/");
                     const srcURLFilename = srcURLLastSlash[srcURLLastSlash.length - 1].split("?")[0];
 
-                    webContents.executeJavaScriptInIsolatedWorld(100, [
-                        {
-                            code: `fetch("${params.srcURL}", {
-    method: 'GET'
-})
-    .then(response => response.blob())
-    .then(blob => {
-        var url = window.URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = "${srcURLFilename}";
-        a.click();    
-        a.remove();  //afterwards we remove the element again         
-    });`
-                        }
-                    ]);
+                    const {canceled, filePath} = await dialog.showSaveDialog(browserWindow, {title: `Save File ${srcURLFilename}`});
+
+                    if (!canceled) {
+                        // const handle = await open(filePath, "w", 0o644);
+                        const writeStream = createWriteStream(filePath, {
+                            mode: 0o644
+                        });
+
+                        get(params.srcURL, (response) => {
+                            response.pipe(writeStream);
+
+                            writeStream.close();
+
+                            console.log("Done writing");
+                        });
+
+                        
+                        await setTimeout(30000); // To push the downoad to a global array that can be accessed by menuBar so that the user can manage downloads
+
+                        writeStream.close();
+                    }
                 }
             }
         ];
