@@ -1,7 +1,10 @@
-const { ipcMain } = require("electron/main");
-const Store = require("electron-store");
+// const { ipcMain } = require("electron/main");
+import { ipcMain } from "electron/main";
+// const Store = require("electron-store");
+import Store from "electron-store";
+import { DomainDefaultsStore } from "../types/domainDefaults";
 
-const store = new Store({
+const store = new Store<DomainDefaultsStore>({
     defaults: {
         "manageBacDomainOverride": false,
         "manageBacDomain": "managebac.com",
@@ -57,7 +60,9 @@ const setupRedirect = async () => {
     });
 };
 
-module.exports = {
-    setupRedirect,
-    subdomainDefault
-};
+// module.exports = {
+//     setupRedirect,
+//     subdomainDefault
+// };
+
+export { setupRedirect, subdomainDefault };

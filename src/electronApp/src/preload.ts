@@ -1,7 +1,17 @@
-const { resolve } = require("node:path");
+// const { resolve } = require("node:path");
+import { resolve } from "node:path";
+import jQueryStatic from "jquery";
+
+declare global {
+    interface Window {
+        jQuery: JQueryStatic,
+        $: JQueryStatic
+    }
+}
 
 window.addEventListener("DOMContentLoaded", () => {
-    const jQuery = require("jquery");
+    // const jQuery = require("jquery");
+    const jQuery = jQueryStatic(window, true);
     
     window.jQuery = jQuery;
     window.$ = jQuery;

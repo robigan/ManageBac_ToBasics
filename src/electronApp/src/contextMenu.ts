@@ -1,22 +1,22 @@
 // Some of the code is of copyright holder Sindre Sorhus (MIT License)
 
-const { Menu, dialog } = require("electron/main");
-const { createWriteStream } = require("node:fs");
-const { get } = require("node:https");
-const { setTimeout } = require("node:timers/promises");
+import { } from "electron"; // Ts complains if I don't have this import statement
+import { BrowserWindow, Menu, dialog } from "electron/main";
+import { createWriteStream } from "node:fs";
+import { get } from "node:https";
+import { setTimeout } from "node:timers/promises";
 
-const { development } = require("./helper.js");
+import { EditFlagsContext } from "../types/contextMenu";
+import { development } from "./helper";
 
-/**
- * @param {import("electron/main").BrowserWindow} browserWindow 
- */
-const setupContextMenu = (browserWindow) => {
+const setupContextMenu = (browserWindow: BrowserWindow) => {
     const webContents = browserWindow.webContents;
 
     webContents.on("context-menu", (event, params) => {
         const hasText = params.selectionText.trim().length > 0;
         // const isLink = !!params.linkURL;
-        const can = type => params.editFlags[`can${type}`] && hasText;
+        const can = (type: EditFlagsContext) => params.editFlags[`can${type}`] && hasText;
+        // params.editFlags[""]
 
         /**
          * @type {...[import("electron/main").MenuItemConstructorOptions]}
@@ -62,7 +62,9 @@ const setupContextMenu = (browserWindow) => {
 
                     const {canceled, filePath} = await dialog.showSaveDialog(browserWindow, {title: `Save File ${srcURLFilename}`});
 
-                    if (!canceled) {
+
+
+                    if (!canceled && filePath !== undefined) {
                         // const handle = await open(filePath, "w", 0o644);
                         const writeStream = createWriteStream(filePath, {
                             mode: 0o644
@@ -80,16 +82,20 @@ const setupContextMenu = (browserWindow) => {
                         await setTimeout(30000); // To push the downoad to a global array that can be accessed by menuBar so that the user can manage downloads
 
                         writeStream.close();
+                    } else {
+                        // Throw error modal to user
                     }
                 }
             }
         ];
 
         const menu = Menu.buildFromTemplate(template);
-        menu.popup(browserWindow);
+        menu.popup({ window: browserWindow });
     });
 };
 
-module.exports = {
-    setupContextMenu
-};
+// module.exports = {
+//     setupContextMenu
+// };
+
+export { setupContextMenu };
