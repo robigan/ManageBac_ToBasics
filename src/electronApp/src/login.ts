@@ -1,7 +1,16 @@
-// eslint-disable-next-line no-unused-vars
-const development = process.env.NODE_ENV === "development" || false;
-// const { ipcRenderer } = require("electron/renderer");
+declare global { // Some weird global flags managebac implements which seems to patch shit
+    interface Window {
+        et_is_transparent_nav: boolean;
+        et_is_vertical_nav: boolean;
+    }
+}
+
 import { ipcRenderer } from "electron/renderer";
+
+const TO_HIDE = ["header#main-header", "div.secondary-nav.nav-learning-platform", "footer.et-l.et-l--footer"];
+const TO_FIX = "div#page-container";
+
+const development = process.env.NODE_ENV === "development" || false;
 
 window.addEventListener("DOMContentLoaded", async () => {
     if (location.host.endsWith(".managebac.com") && !(location.host === "www.managebac.com") && location.pathname === "/login") {
@@ -18,8 +27,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-const TO_HIDE = ["header#main-header", "div.secondary-nav.nav-learning-platform", "footer.et-l.et-l--footer"];
-const TO_FIX = "div#page-container";
 window.addEventListener("DOMContentLoaded", async () => {
     if (location.host === "www.managebac.com" && location.pathname === "/login") {
         $("body").addClass("et_hide_nav"); // This will hide the nav bar
@@ -31,20 +38,25 @@ window.addEventListener("DOMContentLoaded", async () => {
         development ? console.log($("body").hasClass("et_fixed_nav")) : undefined;
 
         TO_HIDE.forEach((query) => {
-            const el = document.querySelector(query);
-            if (el !== null && el.style !== undefined) {
+            const el = document.querySelector(query) as HTMLElement; // Would be much more efficient to use document.querySelectorAll(), I am too lazy
+            if (el !== null && el.style !== undefined) { // Typescript is right that the returned element can be of type Element, so assert that it has the style property to assert it's an HTMLElement
                 el.style.display = "none";
+            } else if (el !== null && el.style === undefined) {
+                console.warn("Passed element for TO_HIDE in login.ts doesn't have a style property");
             }
         });
-
-        // (async () => {
-        //     setTimeout(() => document.querySelector(TO_FIX).style.paddingTop = "0px", 300);
-        // })().catch(console.error);
-        // document.querySelector(TO_FIX).style.paddingTop = "0px";
 
         ipcRenderer.send("toggleRedirect", "false");
     }
 });
+
 window.addEventListener("load", async () => {
-    if (location.host === "www.managebac.com" && location.pathname === "/login") setTimeout(() => document.querySelector(TO_FIX).style.paddingTop = "0px", 300);
+    if (location.host === "www.managebac.com" && location.pathname === "/login") setTimeout(() => {
+        const el = document.querySelector(TO_FIX) as HTMLElement;
+        if (el !== null && el.style !== undefined) { // See the above code with the same sample
+            el.style.paddingTop = "0px";
+        } else if (el !== null && el.style === undefined) {
+            console.warn("Passed element for TO_FIX in login.ts doesn't have a style property");
+        }
+    }, 300);
 });

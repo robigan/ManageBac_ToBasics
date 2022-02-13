@@ -3,13 +3,9 @@ const isMac = process.platform === "darwin";
 const isWindows = process.platform === "win32";
 const isLinux = process.platform === "linux";
 const verbosity = process.env.VERBOSE == "1" || false;
+const urlRe = /:\/\/(.[^/]+)/;
+const webContentsOptions = {
+    userAgent: `Electron/${process.versions.electron}`
+};
 
-// module.exports = {
-//     development,
-//     isMac,
-//     isWindows,
-//     isLinux,
-//     verbosity
-// };
-
-export { development, isMac, isWindows, isLinux, verbosity };
+export { development, isMac, isWindows, isLinux, verbosity, urlRe, webContentsOptions };

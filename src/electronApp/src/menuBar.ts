@@ -1,26 +1,30 @@
-"use strict";
-const { app, Menu, shell, session } = require("electron/main");
-const { isMac, development } = require("./helper.js");
-const template = [
+// const { app, Menu, shell, session } = require("electron/main");
+import { } from "electron";
+import { app, Menu, session } from "electron/main";
+import { shell } from "electron/common";
+// const { isMac, development } = require("./helper.js");
+import { isMac, development } from "./helper";
+
+const template: Electron.MenuItemConstructorOptions[] = [
     // { role: 'appMenu' }
     ...(isMac ? [{
-            label: app.name,
-            role: "appMenu",
-            submenu: [
-                { role: "about" },
-                { type: "separator" },
-                { role: "services" },
-                { type: "separator" },
-                { role: "hide" },
-                { role: "hideOthers" },
-                { role: "unhide" },
-                { type: "separator" },
-                { role: "quit" }
-            ]
-        }] : []),
+        label: app.name,
+        role: "appMenu",
+        submenu: [
+            { role: "about" },
+            { type: "separator" },
+            { role: "services" },
+            { type: "separator" },
+            { role: "hide" },
+            { role: "hideOthers" },
+            { role: "unhide" },
+            { type: "separator" },
+            { role: "quit" }
+        ]
+    }] : []),
     {
         label: "File",
-        role: "fileMenu",
+        role: "appMenu",
         submenu: [
             {
                 label: "Flush Data Stores",
@@ -85,11 +89,13 @@ const template = [
                 {
                     label: "Back",
                     click: async () => {
+
                     }
                 },
                 {
                     label: "Forward",
                     click: async () => {
+
                     }
                 }
             ] : [])
@@ -107,7 +113,7 @@ const template = [
                 // { type: "separator" },
                 // { role: "window" }
             ] : [
-            // { role: "close" }
+                // { role: "close" }
             ])
         ]
     },
@@ -129,10 +135,10 @@ const template = [
         ]
     }
 ];
-const setMainMenu = async () => {
+
+const setupMainMenu = async () => { // Add more menus to the menu bar
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 };
-module.exports = {
-    setMainMenu
-};
+
+export { setupMainMenu };

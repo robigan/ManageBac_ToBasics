@@ -9,7 +9,10 @@ import { setTimeout } from "node:timers/promises";
 import { EditFlagsContext } from "../types/contextMenu";
 import { development } from "./helper";
 
-const setupContextMenu = (browserWindow: BrowserWindow) => {
+/**
+ * Handle setting up the context menu that appears when right clicking
+ */
+const setupContextMenu = async (browserWindow: BrowserWindow) => {
     const webContents = browserWindow.webContents;
 
     webContents.on("context-menu", (event, params) => {
@@ -93,9 +96,5 @@ const setupContextMenu = (browserWindow: BrowserWindow) => {
         menu.popup({ window: browserWindow });
     });
 };
-
-// module.exports = {
-//     setupContextMenu
-// };
 
 export { setupContextMenu };
