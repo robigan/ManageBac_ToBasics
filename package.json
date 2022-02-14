@@ -3,15 +3,17 @@
   "productName": "ManageBac",
   "version": "1.0.0",
   "description": "A project that goes back to development basics 101, while working on improving the ManageBac ecosystem, LIKE MAKING AT LEAST AN ELECTRON APP HUH?!?!?!\nRemeber: This is an unofficial project, by using this project ur taking your own risks",
-  "main": "electronApp/main.js",
+  "main": "build/electronApp/src/main.js",
   "scripts": {
     "start": "electron .",
     "lint": "eslint electronApp popupChrome indexChrome.js",
-    "build": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite",
-    "build:all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --all",
-    "build:darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"darwin\" --icon=./electronApp/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-category-type=\"public.app-category.education\"",
-    "build:win32": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"win32\" --icon=./electronApp/ManageBacIcon.ico",
-    "build:linux": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"linux\" --icon=./electronApp/ManageBacIcon.png"
+    "compile": "tsc",
+    "build": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"src\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite",
+    "build:all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"src\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --all",
+    "build:darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"src\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"darwin\" --icon=./electronApp/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-category-type=\"public.app-category.education\"",
+    "build:win32": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"src\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"win32\" --icon=./electronApp/ManageBacIcon.ico",
+    "build:linux": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"src\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"linux\" --icon=./electronApp/ManageBacIcon.png",
+    "clean": "rm -r ./build && rm -r ./out"
   },
   "keywords": [
     "managebac",
@@ -31,7 +33,7 @@
     "electron": "^17.0.0",
     "electron-packager": "^15.4.0",
     "eslint": "^8.9.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.1-rc"
   },
   "dependencies": {
     "electron-store": "^8.0.1",

@@ -13,7 +13,9 @@ const getCSS = async () => {
  */
 const updateCSS = async (value) => {
     localStorage.setItem("manageback_tobasics_globalCSS", value.toString());
-    return await getCSS;
+    const css = await getCSS();
+    if (css !== null) return css;
+    else return "";
 };
 
 window.addEventListener("DOMContentLoaded", async () => {

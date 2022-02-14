@@ -1,5 +1,7 @@
-const { readFile } = require("node:fs/promises");
-const { resolve } = require("node:path");
+// const { readFile } = require("node:fs/promises");
+import { readFile } from "node:fs/promises";
+// const { resolve } = require("node:path");
+import { resolve } from "node:path";
 
 const themesUI = readFile(resolve(__dirname, "themes.html"));
 
@@ -12,7 +14,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             const UI = $((await themesUI).toString());
 
             studentProfileNavbar.children().each((index, el) => {
-                el.classList = "";
+                el.className = "";
             });
             customThemes.addClass("active");
 
