@@ -48,11 +48,11 @@ jobs:
         experimental: [false]
         include:
           - os: macos-latest
-            npmcommand: build-darwin
+            npmcommand: build:darwin
           - os: ubuntu-latest
-            npmcommand: build-linux
+            npmcommand: build:linux
           - os: windows-latest
-            npmcommand: build-win32
+            npmcommand: build:win32
 
     steps:
     - uses: actions/checkout@v2

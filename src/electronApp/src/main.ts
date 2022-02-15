@@ -37,9 +37,10 @@ const createWindow = async () => {
     await setupCssLoader(webContents);
 };
 
-await app.whenReady();
-development ? console.log("Running in development") : undefined;
-
-await setupRedirect();
-await createWindow();
-await setupMainMenu();
+app.whenReady().then(async () => {
+    development ? console.log("Running in development") : undefined;
+    
+    await setupRedirect();
+    await createWindow();
+    await setupMainMenu();
+});

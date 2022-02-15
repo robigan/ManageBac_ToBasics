@@ -7,7 +7,7 @@ import { resolve } from "node:path";
  */
 const setupCssLoader = async (webContents: Electron.WebContents) => {
     // Load all css styles from file
-    const style = readFile(resolve(__dirname, "../page/globalStyle.css"), { encoding: "utf-8", flag: "r" });
+    const style = readFile(resolve(__dirname, "../../common/css/globalStyle.css"), { encoding: "utf-8", flag: "r" });
 
     webContents.on("did-start-loading", async () => {
         const match = webContents.getURL().match(urlRe);
