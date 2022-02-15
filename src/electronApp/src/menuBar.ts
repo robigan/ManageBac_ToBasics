@@ -5,7 +5,7 @@ import { shell } from "electron/common";
 // const { isMac, development } = require("./helper.js");
 import { isMac, development } from "./helper";
 
-const template: Electron.MenuItemConstructorOptions[] = [
+const template = [
     // { role: 'appMenu' }
     ...(isMac ? [{
         label: app.name,
@@ -137,7 +137,7 @@ const template: Electron.MenuItemConstructorOptions[] = [
 ];
 
 const setupMainMenu = async () => { // Add more menus to the menu bar
-    const menu = Menu.buildFromTemplate(template);
+    const menu = Menu.buildFromTemplate(template as Electron.MenuItemConstructorOptions[]);
     Menu.setApplicationMenu(menu);
 };
 
