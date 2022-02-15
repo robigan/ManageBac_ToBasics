@@ -6,7 +6,7 @@
   "main": "./build/electronApp/src/main.js",
   "scripts": {
     "start": "electron .",
-    "lint": "eslint src/**/*",
+    "lint": "eslint src/**/*.ts",
     "build": "tsc && yarn run build:copy-files",
     "build:copy-files": "copyfiles -u 1 src/common/css/**/*.css src/common/images/**/*.icns src/common/images/**/*.ico src/common/images/**/*.png build/",
     "pkg": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite",

@@ -88,15 +88,15 @@ const template: Electron.MenuItemConstructorOptions[] = [
             ...(development ? [
                 {
                     label: "Back",
-                    click: async () => {
+                    // click: async () => {
 
-                    }
+                    // }
                 },
                 {
                     label: "Forward",
-                    click: async () => {
+                    // click: async () => {
 
-                    }
+                    // }
                 }
             ] : [])
         ]
