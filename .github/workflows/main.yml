@@ -71,5 +71,5 @@ jobs:
       if: ${{ matrix.node == 16 }}
       uses: actions/upload-artifact@v2
       with:
-        name: Electron-${{ matrix.npmcommand }}
+        name: Electron-${{ matrix.codename }}
         path: out/
