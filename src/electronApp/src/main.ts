@@ -35,12 +35,12 @@ const createWindow = async () => {
     await setupContextMenu(win);
     await setupWindowOpenHandler(webContents);
     await setupCssLoader(webContents);
+    await setupRedirect(webContents);
 };
 
 app.whenReady().then(async () => {
     development ? console.log("Running in development") : undefined;
     
-    await setupRedirect();
     await createWindow();
     await setupMainMenu();
 });
