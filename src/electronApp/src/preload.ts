@@ -1,13 +1,13 @@
 // const { resolve } = require("node:path");
 import { resolve } from "node:path";
-import jQueryStatic from "jquery";
+// import jQueryStatic from "jquery";
 
-declare global {
-    interface Window {
-        jQuery: JQueryStatic,
-        $: JQueryStatic
-    }
-}
+// declare global {
+//     interface Window {
+//         jQuery: JQueryStatic,
+//         $: JQueryStatic
+//     }
+// }
 
 window.addEventListener("load", () => {
     // const jQuery = require("jquery");
@@ -19,5 +19,5 @@ window.addEventListener("load", () => {
 
 // require(resolve(__dirname, "./login.js"));
 // require(resolve(__dirname, "../core/themes.js"));
-// require(resolve(__dirname, "../core/globalCss.js"));
+require(resolve(__dirname, "../core/globalCss.js"));
 // require(resolve(__dirname, "./contextMenu.js"));
