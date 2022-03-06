@@ -1,6 +1,6 @@
 {
   "name": "manage-back_to-basics",
-  "productName": "ManageBac",
+  "productName": "ManageBack ToBasics",
   "version": "1.0.0",
   "description": "A project that goes back to development basics 101, while working on improving the ManageBac ecosystem, LIKE MAKING AT LEAST AN ELECTRON APP HUH?!?!?!\nRemeber: This is an unofficial project, by using this project ur taking your own risks",
   "main": "./build/electronApp/src/main.js",
@@ -9,6 +9,7 @@
     "lint": "eslint src/**/*.ts",
     "build": "yarn run build:copy-files && tsc",
     "build:copy-files": "copyfiles -u 1 src/common/css/**/*.css src/common/images/**/*.icns src/common/images/**/*.ico src/common/images/**/*.png build/",
+    "watch": "yarn run build:copy-files && tsc --watch",
     "pkg": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite",
     "pkg:all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite --all",
     "pkg:darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite --platform=\"darwin\" --icon=./build/common/images/icons/electron/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-category-type=\"public.app-category.education\"",
@@ -41,6 +42,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "electron-dl": "^3.3.0",
     "electron-store": "^8.0.1",
     "jquery": "^3.6.0"
   }

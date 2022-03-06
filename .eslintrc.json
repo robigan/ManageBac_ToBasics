@@ -38,5 +38,5 @@
             "always"
         ]
     },
-    "ignorePatterns": "build/**/*"
+    "ignorePatterns": ["build/**/*", "out/**/*"]
 }

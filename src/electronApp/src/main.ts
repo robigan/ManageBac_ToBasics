@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from "electron/main";
 import { resolve } from "node:path";
 
-import { setupRedirect, subdomainDefault } from "./domainDefaults";
+import { getSubdomain, setupRedirect } from "./domainDefaults";
 import { setupContextMenu } from "./contextMenu";
 import { setupMainMenu } from "./menuBar";
 import { setupWindowOpenHandler } from "./windowOpenHandler";
@@ -26,21 +26,21 @@ const createWindow = async () => {
         icon: resolve(__dirname, "ManageBacIcon.png"),
     });
 
-    const subdomain = await subdomainDefault("get");
-    win.loadURL(subdomain && (subdomain !== "www") ? `https://${subdomain}.managebac.com` : "https://www.managebac.com/login", webContentsOptions);
+    const subdomain = await getSubdomain();
+    const loader = win.loadURL(subdomain && (subdomain !== "www") ? `https://${subdomain}.managebac.com` : "https://www.managebac.com/login", webContentsOptions);
 
     // Set such that when opening a new window the action is denied, so as to give a more app like experience
     const webContents = win.webContents;
 
     await setupContextMenu(win);
+    await setupMainMenu(win);
     await setupWindowOpenHandler(webContents);
     await setupCssLoader(webContents);
-    await setupRedirect(webContents);
+    await setupRedirect(webContents, loader);
 };
 
 app.whenReady().then(async () => {
     development ? console.log("Running in development") : undefined;
     
     await createWindow();
-    await setupMainMenu();
 });

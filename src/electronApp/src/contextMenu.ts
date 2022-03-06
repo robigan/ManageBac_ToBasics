@@ -1,12 +1,11 @@
 // Some of the code is of copyright holder Sindre Sorhus (MIT License)
 
 import { } from "electron"; // Ts complains if I don't have this import statement
-import { BrowserWindow, Menu, dialog } from "electron/main";
-import { createWriteStream } from "node:fs";
-import { get } from "node:https";
-import { setTimeout } from "node:timers/promises";
+import { clipboard } from "electron/common";
+import { BrowserWindow, Menu, MenuItemConstructorOptions } from "electron/main";
 
 import { EditFlagsContext } from "../types/contextMenu";
+import { download } from "electron-dl";
 import { development } from "./helper";
 
 /**
@@ -19,20 +18,14 @@ const setupContextMenu = async (browserWindow: BrowserWindow) => {
         const hasText = params.selectionText.trim().length > 0;
         // const isLink = !!params.linkURL;
         const can = (type: EditFlagsContext) => params.editFlags[`can${type}`] && hasText;
-        // params.editFlags[""]
 
         /**
          * @type {...[import("electron/main").MenuItemConstructorOptions]}
          */
-        const template = [
+        const template: MenuItemConstructorOptions[] = [
             {
-                label: "Do Something",
-                click: async () => {
-                    development ? console.trace("I have been clicked!") : undefined;
-                }
-            },
-            {
-                label: "Cu&t",
+                id: "cut",
+                label: "Cut",
                 enabled: can("Cut"),
                 visible: params.isEditable,
                 async click() {
@@ -40,7 +33,8 @@ const setupContextMenu = async (browserWindow: BrowserWindow) => {
                 }
             },
             {
-                label: "&Copy",
+                id: "copy",
+                label: "Copy",
                 enabled: can("Copy"),
                 visible: params.isEditable || hasText,
                 async click() {
@@ -48,7 +42,8 @@ const setupContextMenu = async (browserWindow: BrowserWindow) => {
                 }
             },
             {
-                label: "&Paste",
+                id: "paste",
+                label: "Paste",
                 enabled: can("Paste"),
                 visible: params.isEditable,
                 async click() {
@@ -56,38 +51,52 @@ const setupContextMenu = async (browserWindow: BrowserWindow) => {
                 }
             },
             {
-                label: "Save I&mage",
+                type: "separator"
+            },
+            {
+                id: "copyLink",
+                label: "Copy Link",
+                visible: params.linkURL.length > 0 && params.mediaType === "none",
+                async click() {
+                    clipboard.write({
+                        bookmark: params.linkText,
+                        text: params.linkURL
+                    });
+                }
+            },
+            {
+                id: "copyImage",
+                label: "Copy Image",
                 visible: params.mediaType === "image",
                 async click() {
-                    // I am lazy af
-                    const srcURLLastSlash = params.srcURL.split("/");
-                    const srcURLFilename = srcURLLastSlash[srcURLLastSlash.length - 1].split("?")[0];
-
-                    const {canceled, filePath} = await dialog.showSaveDialog(browserWindow, {title: `Save File ${srcURLFilename}`});
-
-
-
-                    if (!canceled && filePath !== undefined) {
-                        // const handle = await open(filePath, "w", 0o644);
-                        const writeStream = createWriteStream(filePath, {
-                            mode: 0o644
-                        });
-
-                        get(params.srcURL, (response) => {
-                            response.pipe(writeStream);
-
-                            writeStream.close();
-
-                            console.log("Done writing");
-                        });
-
-                        
-                        await setTimeout(30000); // To push the downoad to a global array that can be accessed by menuBar so that the user can manage downloads
-
-                        writeStream.close();
-                    } else {
-                        // Throw error modal to user
-                    }
+                    webContents.copyImageAt(params.x, params.y);
+                }
+            },
+            {
+                id: "copyImageAddress",
+                label: "Copy Image Address",
+                visible: params.mediaType === "image",
+                async click() {
+                    clipboard.writeText(params.srcURL);
+                }
+            },
+            {
+                type: "separator"
+            },
+            {
+                id: "saveImage",
+                label: "Save Image",
+                visible: params.mediaType === "image",
+                async click() {
+                    await download(browserWindow, params.srcURL, {saveAs: true});
+                }
+            },
+            { // Simple design choice, rest of managebac shows a save prompt when downloading downloadable content
+                id: "saveImageAs",
+                label: "Save Image Immediately",
+                visible: params.mediaType === "image",
+                async click() {
+                    await download(browserWindow, params.srcURL);
                 }
             }
         ];

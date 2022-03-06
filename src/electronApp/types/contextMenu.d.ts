@@ -2,35 +2,35 @@ interface EditFlags {
     /**
      * Whether the renderer believes it can undo.
      */
-    Undo,
+    Undo: boolean;
     /**
      * Whether the renderer believes it can redo.
      */
-    Redo,
+    Redo: boolean;
     /**
      * Whether the renderer believes it can cut.
      */
-    Cut,
+    Cut: boolean;
     /**
      * Whether the renderer believes it can copy.
      */
-    Copy,
+    Copy: boolean;
     /**
      * Whether the renderer believes it can paste.
      */
-    Paste,
+    Paste: boolean;
     /**
      * Whether the renderer believes it can delete.
      */
-    Delete,
+    Delete: boolean;
     /**
      * Whether the renderer believes it can select all.
      */
-    SelectAll,
+    SelectAll: boolean;
     /**
      * Whether the renderer believes it can edit text richly.
      */
-    EditRichly
+    EditRichly: boolean;
 }
 
 export type EditFlagsContext = keyof EditFlags
