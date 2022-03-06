@@ -1,17 +1,23 @@
 {
   "name": "manage-back_to-basics",
-  "productName": "ManageBac",
+  "productName": "ManageBack ToBasics",
   "version": "1.0.0",
   "description": "A project that goes back to development basics 101, while working on improving the ManageBac ecosystem, LIKE MAKING AT LEAST AN ELECTRON APP HUH?!?!?!\nRemeber: This is an unofficial project, by using this project ur taking your own risks",
-  "main": "electronApp/main.js",
+  "main": "./build/electronApp/src/main.js",
   "scripts": {
     "start": "electron .",
-    "lint": "eslint electronApp page popupChrome indexChrome.js",
-    "build": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite",
-    "build-all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --all",
-    "build-darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"darwin\" --icon=./electronApp/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-categort-type=\"public.app-category.education\"",
-    "build-win32": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"win32\" --icon=./electronApp/ManageBacIcon.ico",
-    "build-linux": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"(?:index|popup)Chrome(?:.js)*\" --ignore=\"manifest\\.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --ignore=\"JSDoc.js\" --out=./out --overwrite --platform=\"linux\" --icon=./electronApp/ManageBacIcon.png"
+    "lint": "eslint src/**/*.ts",
+    "build": "yarn run build:copy-files && tsc",
+    "build:copy-files": "copyfiles -u 1 src/common/css/**/*.css src/common/images/**/*.icns src/common/images/**/*.ico src/common/images/**/*.png build/",
+    "watch": "yarn run build:copy-files && tsc --watch",
+    "pkg": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite",
+    "pkg:all": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite --all",
+    "pkg:darwin": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite --platform=\"darwin\" --icon=./build/common/images/icons/electron/ManageBacIcon.icns --app-bundle-id=\"com.robigan.manage-back_to-basics\" --app-category-type=\"public.app-category.education\"",
+    "pkg:win32": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite --platform=\"win32\" --icon=./build/common/images/icons/electron/ManageBacIcon.ico",
+    "pkg:linux": "electron-packager . --ignore=\"\\.git(ignore|modules)\" --ignore=\"\\.eslintrc.json\" --ignore=\"tsconfig.json\" --ignore=\"manifest.json\" --ignore=\"\\.vscode\" --ignore=\"\\.github\" --ignore=\"out\" --out=./out --overwrite --platform=\"linux\" --icon=./build/common/images/icons/electron/ManageBacIcon.png",
+    "clean": "yarn run build:clean && yarn run pkg:clean",
+    "pkg:clean": "rimraf ./out",
+    "build:clean": "rimraf ./build"
   },
   "keywords": [
     "managebac",
@@ -22,13 +28,21 @@
     "themes"
   ],
   "author": "robigan",
-  "license": "GPLv3",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "electron": "^15.1.2",
+    "@tsconfig/node16": "^1.0.2",
+    "@types/jquery": "^3.5.13",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "copyfiles": "^2.4.1",
+    "electron": "^17.0.0",
     "electron-packager": "^15.4.0",
-    "eslint": "^7.32.0"
+    "eslint": "^8.9.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
+    "electron-dl": "^3.3.0",
     "electron-store": "^8.0.1",
     "jquery": "^3.6.0"
   }

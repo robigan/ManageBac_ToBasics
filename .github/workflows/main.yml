@@ -6,19 +6,15 @@ on:
     paths-ignore:
       - '.vscode/**'
       - 'README.md'
-      - 'typings.json'
-      - 'popupChrome/**'
-      - 'indexChrome.js'
       - 'LICENSE'
+      - 'manifest.json'
   pull_request:
     branches: [master, development]
     paths-ignore:
       - '.vscode/**'
       - 'README.md'
-      - 'typings.json'
-      - 'popupChrome/**'
-      - 'indexChrome.js'
       - 'LICENSE'
+      - 'manifest.json'
   workflow_dispatch:
 
 jobs:
@@ -32,9 +28,9 @@ jobs:
       with:
         node-version: '16'
         cache: 'npm'
-    - run: npm install --production=false
+    - run: yarn install --production=false
     - name: Lint
-      run: npm run-script lint
+      run: yarn run lint
   build:
     needs: lint
     runs-on: ${{ matrix.os }}
@@ -43,16 +39,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [12, 14, 16]
+        node: [14, 16]
         os: [macos-latest, ubuntu-latest, windows-latest]
         experimental: [false]
         include:
           - os: macos-latest
-            npmcommand: build-darwin
+            npmcommand: pkg:darwin
+            codename: Darwin
           - os: ubuntu-latest
-            npmcommand: build-linux
+            npmcommand: pkg:linux
+            codename: Linux
           - os: windows-latest
-            npmcommand: build-win32
+            npmcommand: pkg:win32
+            codename: Windows
 
     steps:
     - uses: actions/checkout@v2
@@ -61,14 +60,16 @@ jobs:
       with:
         node-version: ${{ matrix.node }}
         cache: 'npm'
-    - run: npm install --production=false
-    - name: Build ${{ matrix.npmcommand }}
+    - run: yarn install --production=false
+    - name: Build/Compile ${{ matrix.codename }}
+      run: yarn run build
+    - name: Package ${{ matrix.codename }}
       env:
         COMMAND: ${{ matrix.npmcommand }}
-      run: npm run-script $COMMAND
-    - name: Upload artifact
+      run: yarn run "$COMMAND"
+    - name: Upload artifact if node 16
       if: ${{ matrix.node == 16 }}
       uses: actions/upload-artifact@v2
       with:
-        name: Electron-${{ matrix.npmcommand }}
+        name: Electron-${{ matrix.codename }}
         path: out/

@@ -1,13 +1,22 @@
 {
+    "root": true,
     "env": {
         "browser": true,
-        "commonjs": false,
+        "commonjs": true,
         "es2021": true,
         "node": true,
         "webextensions": true,
         "jquery": true
     },
-    "extends": "eslint:recommended",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 12
     },
@@ -28,5 +37,6 @@
             "error",
             "always"
         ]
-    }
+    },
+    "ignorePatterns": ["build/**/*", "out/**/*"]
 }

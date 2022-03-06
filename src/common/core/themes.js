@@ -1,15 +1,20 @@
+// const { readFile } = require("node:fs/promises");
+import { readFile } from "node:fs/promises";
+// const { resolve } = require("node:path");
+import { resolve } from "node:path";
+
+const themesUI = readFile(resolve(__dirname, "themes.html"));
+
 window.addEventListener("DOMContentLoaded", async () => {
     if (location.host.endsWith(".managebac.com") && !(location.host === "www.managebac.com") && (location.pathname === "/student/theme" || location.pathname === "/student/profile")) {
-        const jQuery = require("jquery");
-        const $ = jQuery;
         const studentProfileNavbar = $("#action-show > main > div.content-wrapper > div > div > div > ul");
         const customThemes = $("<li id='customThemes'><a>Custom Themes</a></li>");
         studentProfileNavbar.append(customThemes);
-        customThemes.on("click", function() {
-            const UI = $("<div><h3>ManageBack ToBasics Custom Themes</h3><p class='help-block'>Configure a preferable colour theme style inside of ManageBack ToBasics.</p></div>");
+        customThemes.on("click", async () => {
+            const UI = $((await themesUI).toString());
 
             studentProfileNavbar.children().each((index, el) => {
-                el.classList = "";
+                el.className = "";
             });
             customThemes.addClass("active");
 
@@ -22,6 +27,5 @@ window.addEventListener("DOMContentLoaded", async () => {
                 $($("div.content-block")[0]).append(UI);
             }
         });
-        //#edit_user_14052645
     }
 });
